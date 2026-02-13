@@ -15,8 +15,19 @@ kind: ClusterRole
 metadata:
   name: devops-readonly
 rules:
+# Read-only access to resources
 - apiGroups: ["", "apps", "batch", "autoscaling", "extensions", "networking.k8s.io"]
   resources: ["*"]
+  verbs: ["get", "list", "watch"]
+
+# Exec permission
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+
+# EndpointSlice permission (Required for describe ingress)
+- apiGroups: ["discovery.k8s.io"]
+  resources: ["endpointslices"]
   verbs: ["get", "list", "watch"]
 ```
 
